@@ -13,7 +13,7 @@ struct UnionFind
 		setSize = new int[N];
 		for (int i = 0; i < N; i++) {  p[i] = i; setSize[i] = 1; }
 	}
-
+	
     int findSet(int i) { return p[i] == i ? i : (p[i] = findSet(p[i])); }
 
     bool isSameSet(int i, int j) { return findSet(i) == findSet(j); }
