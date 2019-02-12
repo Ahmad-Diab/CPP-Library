@@ -188,7 +188,7 @@ BigInteger& operator*=(BigInteger& a, const BigInteger& b) {
 BigInteger& operator/=(BigInteger& a, const BigInteger& b) {
 	a = a / b;
 	return a;
-} /*可选前缀++/--与后缀++/--(注意:加法必选)*/
+}
 BigInteger& operator++(BigInteger& a) {
 	a = a + 1;
 	return a;
