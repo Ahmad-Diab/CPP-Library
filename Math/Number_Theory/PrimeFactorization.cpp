@@ -17,7 +17,7 @@ void sieve(int N)
         {
             primes.push_back(i) ;
 
-            if(1l * i * i <= N)
+            if(1ll * i * i <= N)
                 for(int j = i * i ; j <= N ; j+= i)
                     isComposite[j] = 1 ;
         }
