@@ -30,8 +30,8 @@ int dijkstra(int S, int T)
         if(cost(cur) > dist[to(cur)])continue;
 
         for(Edge nxt: adjList[to(cur)])
-            if(cost(cur) + cost(cur) < dist[to(nxt)])
-                pq.push(Edge(dist[to(nxt)] = cost(nxt) + cost(nxt)  , to(nxt)));
+            if(cost(cur) + cost(nxt) < dist[to(nxt)])
+                pq.push(Edge(dist[to(nxt)] = cost(curr) + cost(nxt)  , to(nxt)));
     }
     return -1;
 }
