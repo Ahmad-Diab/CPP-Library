@@ -8,8 +8,7 @@ using namespace std ;
 template <typename  T> struct Vector ;
 
 template <typename T>
-struct Vector
-{
+struct Vector{
     T x , y ;
 
     Vector(T a , T b){x = a , y = b;}
@@ -26,16 +25,11 @@ struct Vector
 
     Vector reverse(){ return Vector(-x , -y) ;}
 
-    Vector normalize()
-    {
-        double d = sqrt(norm2());
-        return scale(1 / d) ;
-    }
-
+    Vector normalize(){return scale(1 / sqrt(norm2())) ;}
 };
 
-int main()
-{
-
+int main(){
+    ios_base :: sync_with_stdio(false) ;
+    cin.tie(nullptr) ;
     return 0 ;
 }
