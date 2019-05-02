@@ -31,6 +31,10 @@ struct point
     double dist (point<T> p1 , point<T> p2){
         return hypot(p1.x - p2.x , p1.y - p2.y) ;
     }
+    double dist (point<T> p){
+        return dist(point<double>(this->x , this->y) , p) ;
+    }
+
     point<T> rotate(point<T>p , double theta){
         double rad = degToRad(theta);
         return point(p.x * cos(rad) - p.y * sin(rad),p.x * sin(rad) + p.y * cos(rad));
@@ -76,7 +80,7 @@ struct Vector
     T x , y ;
     Vector(T x , T y) : x(x) , y(y) {}
     Vector(point<T> a , point<T>b){this(b.x - a.x, b.y - a.y);}
-    Vector scale(double s) { return new Vector(x * s, y * s); }             
+    Vector scale(double s) { return new Vector(x * s, y * s); }
 
     double dot(Vector v) { return (x * v.x + y * v.y); }
 
@@ -150,9 +154,33 @@ struct lineSegment{
         return c.between(p, q) && c.between(ls.p, ls.q);
     }
 };
-
+double area(double a, double b, double c){
+    double s = (a + b + c) / 2.0 ;
+    return sqrt(s * (s - a) * (s - b) * (s - c)) ;
+}
+double rInCircle(double ab, double bc, double ca) {
+    return area(ab, bc, ca) / (0.5 * (ab + bc + ca));
+}
+double rInCircle(point<double> a, point<double> b, point<double> c) {
+    return rInCircle(a.dist(b), b.dist(c), c.dist(a));
+}
+point<double> inCircle(point<double> p1 , point<double> p2 , point<double> p3)
+{
+  double a = p1.dist(p2) ;
+  double b = p2.dist(p3) ;
+  double c = p3.dist(p1) ;
+  double p = a + b + c ;
+  return point<double>{(a * p1.x + b * p2.x + c * p3.x) / p , (a * p1.y + b * p2.y + c * p3.y) / p};
+}
+double rCircumCircle(double ab, double bc, double ca) {
+    return ab * bc * ca / (4.0 * area(ab, bc, ca));
+}
+double rCircumCircle(point<double> a, point<double> b, point<double> c) {
+    return rCircumCircle(a.dist(b), b.dist(c), c.dist(a));
+}
 int main() {
     ios_base :: sync_with_stdio(false) ;
     cin.tie(nullptr) ;
+
     return 0 ;
 }
