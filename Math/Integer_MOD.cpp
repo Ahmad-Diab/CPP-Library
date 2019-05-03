@@ -19,11 +19,11 @@ struct Integer{
     bool operator == (const Integer y) { return x == y.x ;}
     bool operator != (const int y) { return x != y ;}
     bool operator != (const Integer y) { return x != y.x ;}
-    int operator + (const int y) { return (x + y) % MOD ;}
-    int operator - (const int y) { return (x - y + MOD) % MOD ;}
+    int operator + (const int y) { int ans = x + y ; if(ans >= MOD) return ans -= MOD ; return ans ;}
+    int operator - (const int y) { int ans = x - y ; if(ans < 0) return ans += MOD ; return ans ;}
     int operator * (const int y) { return (1ll * x * y) % MOD ;}
-    int operator + (const Integer y) { return (this->x + y.x) % MOD ;}
-    int operator - (const Integer y) { return (this->x - y.x + MOD) % MOD ;}
+    int operator + (const Integer y) {int ans = this->x + y.x ; if(ans >= MOD) return ans -= MOD ; return ans ;}
+    int operator - (const Integer y) {int ans = this->x - y.x ; if(ans < 0) return ans += MOD ; return ans ;}
     int operator * (const Integer y) { return (1ll * this->x * y.x) % MOD ;}
     int operator ~ (){ return ~x ;}
     int operator += (const int y){ return *this + y;}
@@ -32,9 +32,8 @@ struct Integer{
     int operator += (const Integer y){ return *this + y;}
     int operator *= (const Integer y){ return *this * y;}
     int operator -= (const Integer y){ return *this - y;}
-    int operator ++  (){ return (x + 1) % MOD ;}
-    int operator --  (){ return (x - 1 + MOD) % MOD ;}
-
+    int operator ++  (){ return (*this + Integer(1)) ;}
+    int operator --  (){ return *this - Integer(1) ;}
     Integer powMod(int a , int e)
     {
         Integer ans = 1 ;
@@ -67,14 +66,12 @@ struct Integer{
     int operator % (const Integer y){ return x % y.x ;}
     int operator %= (const int y){ return x % y ;}
     int operator %= (const Integer y){ return x % y.x ;}
-
-
 };
-istream& operator>>(istream &in, Integer& i) {
+istream& operator>>(istream &in, Integer& i){
     in >> i.x ;
     return in;
 }
-ostream& operator<<(ostream &out, const Integer& i) {
+ostream& operator<<(ostream &out, const Integer& i){
     out << i.x ;
     return out;
 }
