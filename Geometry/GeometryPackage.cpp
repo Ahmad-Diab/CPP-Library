@@ -166,11 +166,11 @@ double rInCircle(point<double> a, point<double> b, point<double> c) {
 }
 point<double> inCircle(point<double> p1 , point<double> p2 , point<double> p3)
 {
-  double a = p1.dist(p2) ;
-  double b = p2.dist(p3) ;
-  double c = p3.dist(p1) ;
-  double p = a + b + c ;
-  return point<double>{(a * p1.x + b * p2.x + c * p3.x) / p , (a * p1.y + b * p2.y + c * p3.y) / p};
+    double a = p1.dist(p2) ;
+    double b = p2.dist(p3) ;
+    double c = p3.dist(p1) ;
+    double p = a + b + c ;
+    return point<double>{(a * p1.x + b * p2.x + c * p3.x) / p , (a * p1.y + b * p2.y + c * p3.y) / p};
 }
 double rCircumCircle(double ab, double bc, double ca) {
     return ab * bc * ca / (4.0 * area(ab, bc, ca));
@@ -178,6 +178,30 @@ double rCircumCircle(double ab, double bc, double ca) {
 double rCircumCircle(point<double> a, point<double> b, point<double> c) {
     return rCircumCircle(a.dist(b), b.dist(c), c.dist(a));
 }
+point<double> rotate(double theta , point<double> p , point<double> curr)
+{
+    double xx = -p.x , yy = -p.y ;
+    // translate
+    point<double> around = {curr.x + xx , curr.y + yy};
+    //rotate
+    double c = cos(theta * acos(-1.0) / 180.0) ;
+    double s = sin(theta * acos(-1.0) / 180.0) ;
+    around = {around.x * c - around.y * s , around.x * s + around.y * c} ;
+    // translate back
+    around.x -= xx ;
+    around.y -= yy ;
+    return around ;
+}
+point<double> centerCircumCircle(point<double>a , point<double>b , point<double>c) {
+    point<double> a_perp = rotate(90.0 , {(a.x + b.x) / 2.0 , (a.y + b.y) / 2.0}, a);
+    point<double> b_perp = rotate(90.0 , {(a.x + b.x) / 2.0 , (a.y + b.y) / 2.0}, b);
+    line l1 = {a_perp , b_perp} ;
+    a_perp = rotate(-90.0 , {(a.x + c.x) / 2.0 , (a.y + c.y) / 2.0}, a);
+    b_perp = rotate(-90.0 , {(a.x + c.x) / 2.0 , (a.y + c.y) / 2.0}, c);
+    line l2 = {a_perp , b_perp};
+    return l1.intersect(l2) ;
+}
+
 int main() {
     ios_base :: sync_with_stdio(false) ;
     cin.tie(nullptr) ;
